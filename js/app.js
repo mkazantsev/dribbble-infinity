@@ -11,28 +11,33 @@ var Shot = Backbone.Model.extend({
 var Shots = Backbone.Collection.extend({
 	'model': Shot,
 	'fetch': function(options) {
-		var options = options || {};
-		options.add = true;
-		options.dataType = 'jsonp';
-		options.data = {
-			'per_page': PER_PAGE,
-			'page': this.page
-		};
+		if (!this.inProgress) {
+			var options = options || {};
+			options.add = true;
+			options.dataType = 'jsonp';
+			options.data = {
+				'per_page': PER_PAGE,
+				'page': this.page
+			};
 
-		var that = this;
-		options.success = function() {
-			that.page++;
-			that.trigger('fetch:end', this);
-		};
+			var that = this;
+			options.success = function() {
+				that.page++;
+				that.trigger('fetch:end', this);
+				that.inProgress = false;
+			};
 
-		this.trigger('fetch:start');
-		Backbone.Collection.prototype.fetch.call(this, options);
+			this.trigger('fetch:start');
+			this.inProgress = true;
+			Backbone.Collection.prototype.fetch.call(this, options);
+		}
 	},
 	'parse': function(response) {
 		return response.shots;
 	},
 	'initialize': function() {
 		this.page = 1;
+		this.inProgress = false;
 	}
 });
 
