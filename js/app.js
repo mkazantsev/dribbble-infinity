@@ -139,3 +139,10 @@ var MenuView = Backbone.View.extend({
 var menu = new MenuView({
 	'content': dribbble
 });
+
+
+$(document).ready(function() {
+	$('#shots').onScrollBeyond(function() {
+		$('#load').click();
+	});
+});
