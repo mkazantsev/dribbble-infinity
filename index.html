@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Dribbble: Infinity</title>
+		<link rel="stylesheet" href="css/main.css">
+	</head>
+	<body>
+		<nav>
+			<ul id="menu">
+				<li id="popular" class="active">Popular</li>
+				<li id="debut">Debut</li>
+				<li id="everyone">Everyone</li>
+			</ul>
+		</nav>
+		<section id="shots"></section>
+		<footer><img src="img/loader.gif" id="loader-image"></footer>
+
+		<!-- Various libraries -->
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+		<script type="text/javascript" src="js/jquery.scrollExtend.min.js"></script>
+		<script type="text/javascript" src="js/underscore-min.js"></script>
+		<script type="text/javascript" src="js/backbone-min.js"></script>
+		<!-- / Various libraries -->
+
+		<!-- Templates -->
+		<script id="shotTemplate" type="text/template">
+			<a href="<%= url %>"><img src="<%= image_teaser_url %>" alt="<%= title %>" width="200" height="150"></a>
+			<div class="info">
+				<div class="likes"><a href="<%= url %>/fans"><%= likes_count %> likes</a></div>
+				<div class="comments"><a href="<%= url %>#comments"><%= comments_count %> comments</a></div>
+			</div>
+		</script>
+		<!-- / Templates -->
+
+		<script type="text/javascript" src="js/app.js"></script>
+	</body>
+</html>
