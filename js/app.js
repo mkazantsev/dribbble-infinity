@@ -13,20 +13,23 @@ var Shots = Backbone.Collection.extend({
 	'fetch': function(options) {
 		if (!this.inProgress) {
 			var options = options || {};
-			options.add = true;
-			options.dataType = 'jsonp';
-			options.data = {
-				'per_page': PER_PAGE,
-				'page': this.page
-			};
-
 			var that = this;
-			options.success = function() {
-				that.page++;
-				that.trigger('fetch:end', this);
-				that.inProgress = false;
-			};
-
+			_.extend(options, {
+				'add': true,
+				'dataType': 'jsonp',
+				'data': {
+					'per_page': PER_PAGE,
+					'page': this.page
+				},
+				'success': function() {
+					that.page++;
+					that.trigger('fetch:end', this);
+					that.inProgress = false;
+				},
+				'error': function() {
+					that.inProgress = false;
+				}
+			});
 			this.trigger('fetch:start');
 			this.inProgress = true;
 			Backbone.Collection.prototype.fetch.call(this, options);
